@@ -9,13 +9,13 @@
  |====================|
  */
 
-import fullscreen.*;            // eisagwgi bibliothikis gia fullscreen
+//import fullscreen.*;            // eisagwgi bibliothikis gia fullscreen
 import ddf.minim.*;             // eisagwgi bibgliothikis gia toys hxoys kai thn mousikh
 //**********************dilwsh global metablhtwn***************************************************************************
 CountDown cDown;// countdown class
 Gui gui;// gui
 Intro intro;//dilwnw ena antikeimeno intro
-FullScreen fs;//dilwnw ena antikeimeno fullscreen
+//FullScreen fs;//dilwnw ena antikeimeno fullscreen
 Instructions instructions;
 Menu menu;
 
@@ -28,6 +28,7 @@ float startTime;
 int time=0;
 boolean isStarted = false;
 boolean gameIsStarted = false;
+boolean isFullscreen = true;
 //********************SOUNDS********************************************************************************************
 Sounds sounds;
 Minim minim;//dilwnw ena antikeimeno Minim
@@ -89,10 +90,10 @@ void setup (){
   size(1024,768);//
   noCursor();//
   minim = new Minim(this);//
-  fs = new FullScreen (this);//
+//  fs = new FullScreen (this);//
   intro = new Intro();//
   smooth();
-  fs.enter();
+//  fs.enter();
   delay(3000);
   startTime = millis(); 
   x = width/2;//
@@ -279,20 +280,18 @@ void mousePressed() {
       STATE = INSTRUCTIONS;  
     break;
   case OPTIONS:
-    if (menu.optBtn[0].isOver()){ //FULLSCREEN MODE ON 
-      fs.enter();
+    if (menu.optBtn[0].isOver()){ //FULLSCREEN MODE ON
+    isFullscreen = true;
+//      fs.enter();
     }
     else if (menu.optBtn[1].isOver()){//FULLSCREEN MODE OFF
-      fs.leave();
+    isFullscreen = false;
+//      fs.leave();
     }
     else if (menu.optBtn[2].isOver())//SOUNDS ON
       sounds.unmuteAll();
-          
-
-    
     else if (menu.optBtn[3].isOver())//SOUNDS OFF
      sounds.muteAll();
-    
     else if (menu.backBtn1.isOver())//BACK
       if (gameIsStarted)
         STATE = PAUSE;
@@ -323,17 +322,14 @@ void mousePressed() {
     }
     break;
   case PLAYING:
-    if (mouseButton == RIGHT){
-        if (bombs.size() == 0 && bombsCount > 0) {
-          bombs.add(new Bomb(space.sX+13,space.sY));
-          bombsCount--;
-          
-        } else if( bombs.size() != 0)
-        
-          ((Bomb)bombs.get(0)).expand = true;
-    }
-
-
+//    if (mouseButton == RIGHT){
+//        if (bombs.size() == 0 && bombsCount > 0) {
+//          bombs.add(new Bomb(space.sX+13,space.sY));
+//          bombsCount--;
+//          
+//        } else if( bombs.size() != 0)   
+//          ((Bomb)bombs.get(0)).expand = true;
+//    }
     if (mouseButton == LEFT){
       if (lasers.size()<maxLasers){
         lasers.add( new Laser(space.sX + 13, space.sY) );
@@ -376,6 +372,10 @@ void mousePressed() {
     }
     break;
   }
+}
+
+boolean sketchFullScreen() {
+  return isFullscreen;
 }
 //=========================================================================================================================
 void mouseMoved(){
@@ -479,26 +479,23 @@ void game(){
       laser.display();
     score += score_of_target;
   }
-  // move bombs
-  for(i =0;i<bombs.size();i++){
-    Bomb bomb = (Bomb) bombs.get(i);  
-    if (bomb.expand){
-      bomb.Collide(aliens);  
-      bomb.Expand();
-    }
-
-    else
-      bomb.Move();
-    bomb.display();
-
-    if(!bomb.inTheWorld() || bomb.radius>100){
-      bombs.remove(bomb);
-    }
-  }
-
-
-
-
+//  // move bombs
+//  for(i =0;i<bombs.size();i++){
+//    Bomb bomb = (Bomb) bombs.get(i);  
+//    if (bomb.expand){
+//      bomb.Collide(aliens);  
+//      bomb.Expand();
+//    }
+//
+//    else
+//      bomb.Move();
+//    bomb.display();
+//
+//    if(!bomb.inTheWorld() || bomb.radius>100){
+//      bombs.remove(bomb);
+//    }
+//  }
+  
   aliens.Move();
   aliens.Display();
 
@@ -542,45 +539,3 @@ void game(){
 //==========================================================================================================================
 //==========================================================================================================================
 //==========================================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
